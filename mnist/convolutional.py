@@ -13,13 +13,19 @@ with tf.variable_scope("convolutional"):
 
 # train
 y_ = tf.placeholder("float", [None, 10])
+
 cross_entropy = -tf.reduce_sum(y_ * tf.log(y))
+
 train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
+
 correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
+
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
 
 saver = tf.train.Saver(variables)
+
 init = tf.initialize_all_variables()
+
 with tf.Session() as sess:
     sess.run(init)
     for i in range(20000):
@@ -30,6 +36,5 @@ with tf.Session() as sess:
         sess.run(train_step, feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
 
     print(sess.run(accuracy, feed_dict={x: data.test.images, y_: data.test.labels, keep_prob: 1.0}))
-
     path = saver.save(sess, os.path.join(os.path.dirname(__file__), "data/convolutional.ckpt"))
     print("Saved:", path)
