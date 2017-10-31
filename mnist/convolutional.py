@@ -37,4 +37,4 @@ with tf.Session() as sess:
 
     print(sess.run(accuracy, feed_dict={x: data.test.images, y_: data.test.labels, keep_prob: 1.0}))
     path = saver.save(sess, os.path.join(os.path.dirname(__file__), "data/convolutional.ckpt"))
-    print("Saved:", path)
+    print("Saved:", path2)
